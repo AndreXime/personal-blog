@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  name              String?
+  password          String?
+  avatarUrl         String?   @map("avatar_url")
+  bio               String?
+  role              String    @default("user")
+  emailVerified     Boolean   @default(false) @map("email_verified")
+  verificationToken String?   @map("verification_token")
+  resetToken        String?   @map("reset_token")
+  resetTokenExpiry  DateTime? @map("reset_token_expiry")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  posts             Post[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("sessions")
+}
+
+model Category {
+  id          String          @id @default(uuid())
+  name        String          @unique
+  slug        String          @unique
+  description String?
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  posts       PostCategory[]
+
+  @@map("categories")
+}
+
+model Tag {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  posts     PostTag[]
+
+  @@map("tags")
+}
+
+model Post {
+  id          String         @id @default(uuid())
+  title       String
+  slug        String         @unique
+  excerpt     String?
+  content     String
+  coverImage  String?        @map("cover_image")
+  readingTime Int            @default(0) @map("reading_time")
+  published   Boolean        @default(false)
+  featured    Boolean        @default(false)
+  authorId    String?        @map("author_id")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+  publishedAt DateTime?      @map("published_at")
+  author      User?          @relation(fields: [authorId], references: [id])
+  categories  PostCategory[]
+  tags        PostTag[]
+  views       PostView[]
+
+  @@map("posts")
+}
+
+model PostCategory {
+  postId     String   @map("post_id")
+  categoryId String   @map("category_id")
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+  @@map("post_categories")
+}
+
+model PostTag {
+  postId String @map("post_id")
+  tagId  String @map("tag_id")
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+model PostView {
+  id        String   @id @default(uuid())
+  postId    String   @map("post_id")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  viewedAt  DateTime @default(now()) @map("viewed_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("post_views")
+}
