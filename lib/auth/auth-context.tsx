@@ -81,6 +81,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				return { error: data.error, success: false };
 			}
 
+			setUser(data.user);
+			router.refresh();
 			return { error: null, success: true };
 		} catch {
 			return { error: 'An unexpected error occurred', success: false };

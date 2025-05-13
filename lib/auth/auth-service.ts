@@ -20,6 +20,12 @@ const COOKIE_OPTIONS = {
  * Register a new user
  */
 export async function registerUser(email: string, password: string, name?: string) {
+	// Ensure only one user can be registered
+	const userCount = await prisma.user.count();
+	if (userCount >= 1) {
+		throw new Error('User already exists');
+	}
+
 	// Check if user already exists
 	const existingUser = await prisma.user.findUnique({
 		where: { email },

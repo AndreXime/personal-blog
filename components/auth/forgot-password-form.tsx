@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
-import { useTab } from './tab-context';
 
 export function ForgotPasswordForm() {
 	const [email, setEmail] = useState('');
@@ -17,7 +16,6 @@ export function ForgotPasswordForm() {
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
 	const { resetPassword } = useAuth();
-	const { setTab } = useTab();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -91,11 +89,7 @@ export function ForgotPasswordForm() {
 
 			<div className="text-center text-sm">
 				Remember your password?
-				<button
-					onClick={() => setTab('Login')}
-					className="text-primary hover:underline">
-					Sign in
-				</button>
+				<button className="text-primary hover:underline">Sign in</button>
 			</div>
 		</div>
 	);
