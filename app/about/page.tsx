@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 
 export const metadata = {
-	title: 'About Me | Personal Blog',
-	description: 'Learn more about the author of this blog',
+	title: 'Sobre Mim | Blog Pessoal',
+	description: 'Saiba mais sobre o autor deste blog',
 };
 
 export default function AboutPage() {
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<div className="max-w-3xl mx-auto">
-				<h1 className="text-4xl font-bold mb-6">About Me</h1>
+				<h1 className="text-4xl font-bold mb-6">Sobre Mim</h1>
 
 				<div className="flex flex-col md:flex-row gap-8 mb-10">
 					<div className="md:w-1/3">
@@ -26,7 +26,7 @@ export default function AboutPage() {
 
 					<div className="md:w-2/3">
 						<h2 className="text-2xl font-semibold mb-4">John Doe</h2>
-						<p className="text-muted-foreground mb-4">Writer, developer, and technology enthusiast</p>
+						<p className="text-muted-foreground mb-4">Escritor, desenvolvedor e entusiasta de tecnologia</p>
 
 						<div className="flex space-x-4 mb-6">
 							<Link
@@ -59,25 +59,26 @@ export default function AboutPage() {
 
 				<div className="prose max-w-none dark:prose-invert">
 					<p>
-						Hello! I&apos;m John, a passionate writer and developer with over 10 years of experience in the tech
-						industry. I created this blog to share my thoughts, experiences, and knowledge with the world.
+						Olá! Eu sou John, um escritor e desenvolvedor apaixonado com mais de 10 anos de experiência na indústria de
+						tecnologia. Criei este blog para compartilhar meus pensamentos, experiências e conhecimento com o mundo.
 					</p>
 
 					<p>
-						My journey began when I first discovered programming in college. Since then, I&apos;ve worked with various
-						technologies and frameworks, always eager to learn and explore new possibilities. I&apos;m particularly
-						interested in web development, artificial intelligence, and how technology can improve our daily lives.
+						Minha jornada começou quando descobri a programação na faculdade. Desde então, trabalhei com várias
+						tecnologias e frameworks, sempre ansioso para aprender e explorar novas possibilidades. Tenho particular
+						interesse em desenvolvimento web, inteligência artificial e como a tecnologia pode melhorar nossa vida
+						diária.
 					</p>
 
 					<p>
-						When I&apos;m not coding or writing, you can find me hiking in the mountains, reading science fiction, or
-						experimenting with new recipes in the kitchen. I believe in continuous learning and personal growth, and I
-						hope my blog inspires you to pursue your own passions.
+						Quando não estou programando ou escrevendo, você pode me encontrar caminhando nas montanhas, lendo ficção
+						científica ou experimentando novas receitas na cozinha. Acredito no aprendizado contínuo e no crescimento
+						pessoal, e espero que meu blog inspire você a perseguir suas próprias paixões.
 					</p>
 
 					<p>
-						Feel free to reach out if you have any questions, suggestions, or just want to connect. I&apos;m always open
-						to interesting conversations and new opportunities.
+						Sinta-se à vontade para entrar em contato se tiver alguma dúvida, sugestão ou apenas queira conversar. Estou
+						sempre aberto a conversas interessantes e novas oportunidades.
 					</p>
 				</div>
 			</div>

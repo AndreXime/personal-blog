@@ -16,14 +16,14 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
 
 	if (!tag) {
 		return {
-			title: 'Tag Not Found',
-			description: "The tag you're looking for doesn't exist",
+			title: 'Tag Não Encontrada',
+			description: 'A tag que você está procurando não existe',
 		};
 	}
 
 	return {
-		title: `#${tag.name} | Personal Blog`,
-		description: `Browse all posts tagged with #${tag.name}`,
+		title: `#${tag.name} | Blog Pessoal`,
+		description: `Navegue por todos os posts com a tag #${tag.name}`,
 	};
 }
 
@@ -45,7 +45,7 @@ export default async function TagPage({ params }: TagPageProps) {
 				</div>
 
 				<p className="mb-8 text-muted-foreground">
-					Browsing {posts.length} post{posts.length === 1 ? '' : 's'} tagged with #{tag.name}
+					Visualizando {posts.length} post{posts.length === 1 ? '' : 's'} com a tag #{tag.name}
 				</p>
 
 				{posts.length > 0 ? (
@@ -59,8 +59,8 @@ export default async function TagPage({ params }: TagPageProps) {
 					</div>
 				) : (
 					<div className="text-center py-12">
-						<p className="text-lg mb-4">No posts found with this tag.</p>
-						<p>Check back later for new content.</p>
+						<p className="text-lg mb-4">Nenhum post encontrado com esta tag.</p>
+						<p>Volte mais tarde para conferir novos conteúdos.</p>
 					</div>
 				)}
 			</div>

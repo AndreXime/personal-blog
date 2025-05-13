@@ -7,8 +7,8 @@ import { getAllPosts } from '@/lib/posts';
 import { getAllCategories } from '@/lib/categories';
 
 export const metadata: Metadata = {
-	title: 'Blog | Personal Blog',
-	description: 'Read all blog posts',
+	title: 'Blog | Blog Pessoal',
+	description: 'Leia todos os posts do blog',
 };
 
 export default async function BlogPage() {

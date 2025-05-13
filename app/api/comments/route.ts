@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 		const { postId, content, parentId } = await request.json();
 
 		if (!postId || !content) {
-			return NextResponse.json({ success: false, message: 'Post ID and content are required' }, { status: 400 });
+			return NextResponse.json({ success: false, message: 'ID do post e conteúdo são obrigatórios' }, { status: 400 });
 		}
 
 		// Add the comment

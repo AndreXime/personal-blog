@@ -4,8 +4,8 @@ import { SearchBar } from '@/components/common/search-bar';
 import { searchPosts } from '@/lib/posts';
 
 export const metadata: Metadata = {
-	title: 'Search Results | Personal Blog',
-	description: 'Search results for your query',
+	title: 'Resultados da Busca | Blog Pessoal',
+	description: 'Resultados da busca para sua consulta',
 };
 
 interface SearchPageProps {
@@ -20,16 +20,16 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 		<main className="container mx-auto px-4 py-8">
 			<div className="max-w-5xl mx-auto">
 				<div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-					<h1 className="text-4xl font-bold">Search Results</h1>
+					<h1 className="text-4xl font-bold">Resultados da Busca</h1>
 					<SearchBar initialQuery={query} />
 				</div>
 
 				<p className="mb-8 text-muted-foreground">
 					{query === ''
-						? 'Enter a search term to find posts'
+						? 'Digite um termo para buscar posts'
 						: posts.length === 0
-						? `No results found for "${query}"`
-						: `Found ${posts.length} result${posts.length === 1 ? '' : 's'} for "${query}"`}
+						? `Nenhum resultado encontrado para "${query}"`
+						: `Encontrado(s) ${posts.length} resultado(s) para "${query}"`}
 				</p>
 
 				{posts.length > 0 ? (
@@ -44,8 +44,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 				) : (
 					query !== '' && (
 						<div className="text-center py-12">
-							<p className="text-lg mb-4">No posts found matching your search criteria.</p>
-							<p>Try using different keywords or browse our categories.</p>
+							<p className="text-lg mb-4">Nenhum post encontrado com seus critérios de busca.</p>
+							<p>Tente usar palavras-chave diferentes ou navegue pelas nossas categorias.</p>
 						</div>
 					)
 				)}

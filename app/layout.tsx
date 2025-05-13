@@ -11,18 +11,17 @@ import { headers } from 'next/headers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Personal Blog',
-	description: 'A personal blog built with Next.js',
+	title: 'Blog Pessoal',
+	description: 'Um blog pessoal construído com Next.js',
 	authors: [{ name: 'John Doe' }],
 	openGraph: {
 		type: 'website',
-		locale: 'en_US',
+		locale: 'pt-br',
 		url: 'https://personal-blog.vercel.app',
-		title: 'Personal Blog',
-		description: 'A personal blog built with Next.js',
-		siteName: 'Personal Blog',
+		title: 'Blog Pessoal',
+		description: 'Um blog pessoal construído com Next.js',
+		siteName: 'Blog Pessoal',
 	},
-	generator: 'v0.dev',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

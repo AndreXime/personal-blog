@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
 	if (!post) {
 		return {
-			title: 'Post Not Found',
-			description: "The post you're looking for doesn't exist",
+			title: 'Post Não Encontrado',
+			description: 'O post que você está procurando não existe',
 		};
 	}
 
 	return {
-		title: `${post.title} | Personal Blog`,
+		title: `${post.title} | Blog Pessoal`,
 		description: post.excerpt || undefined,
 		authors: post.author?.name ? { name: post.author.name } : undefined,
 		openGraph: {
@@ -61,7 +61,7 @@ export default async function PostPage({ params }: PostPageProps) {
 						<div className="flex items-center">
 							<Calendar className="mr-2 h-4 w-4" />
 							<time dateTime={String(post.publishedAt) || String(post.createdAt)}>
-								{new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', {
+								{new Date(post.publishedAt || post.createdAt).toLocaleDateString('pt-BR', {
 									year: 'numeric',
 									month: 'long',
 									day: 'numeric',
@@ -70,7 +70,7 @@ export default async function PostPage({ params }: PostPageProps) {
 						</div>
 						<div className="flex items-center">
 							<Clock className="mr-2 h-4 w-4" />
-							<span>{post.readingTime} min read</span>
+							<span>{post.readingTime} min de leitura</span>
 						</div>
 					</div>
 
@@ -112,14 +112,14 @@ export default async function PostPage({ params }: PostPageProps) {
 						<div className="flex items-center gap-4">
 							<Image
 								src={post.author?.avatarUrl || '/placeholder.svg?height=80&width=80'}
-								alt={post.author?.name || 'Author'}
+								alt={post.author?.name || 'Autor'}
 								width={80}
 								height={80}
 								className="rounded-full"
 							/>
 							<div>
 								<h3 className="font-semibold">{post.author?.name || 'Anonymous'}</h3>
-								<p className="text-muted-foreground text-sm">{post.author?.bio || 'Writer and content creator.'}</p>
+								<p className="text-muted-foreground text-sm">{post.author?.bio || 'Escritor e criador de conteúdo.'}</p>
 							</div>
 						</div>
 					</div>

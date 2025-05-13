@@ -7,7 +7,7 @@ export async function GET() {
 		const user = await getCurrentUser();
 
 		if (!user) {
-			return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+			return NextResponse.json({ error: 'Usuário não autenticado' }, { status: 401 });
 		}
 
 		return NextResponse.json({ user });
@@ -21,7 +21,7 @@ export async function PUT(request: Request) {
 		const user = await getCurrentUser();
 
 		if (!user) {
-			return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+			return NextResponse.json({ error: 'Usuário não autenticado' }, { status: 401 });
 		}
 
 		const data = await request.json();

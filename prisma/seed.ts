@@ -11,7 +11,7 @@ async function main() {
 			name: 'John Doe',
 			role: 'admin',
 			password: await hash('senha123'),
-			bio: 'Writer, developer, and technology enthusiast with over 10 years of experience in the tech industry.',
+			bio: 'Escritor, desenvolvedor e entusiasta de tecnologia com mais de 10 anos de experiência no setor de tecnologia.',
 			avatarUrl: '/placeholder.svg?height=300&width=300',
 		},
 		create: {
@@ -19,7 +19,7 @@ async function main() {
 			name: 'John Doe',
 			role: 'admin',
 			password: await hash('senha123'),
-			bio: 'Writer, developer, and technology enthusiast with over 10 years of experience in the tech industry.',
+			bio: 'Escritor, desenvolvedor e entusiasta de tecnologia com mais de 10 anos de experiência no setor de tecnologia.',
 			avatarUrl: '/placeholder.svg?height=300&width=300',
 		},
 	});
@@ -29,9 +29,9 @@ async function main() {
 		where: { slug: 'technology' },
 		update: {},
 		create: {
-			name: 'Technology',
+			name: 'Tecnologia',
 			slug: 'technology',
-			description: 'Articles about the latest technology trends and innovations',
+			description: 'Artigos sobre as últimas tendências e inovações em tecnologia',
 		},
 	});
 
@@ -39,9 +39,9 @@ async function main() {
 		where: { slug: 'coding' },
 		update: {},
 		create: {
-			name: 'Coding',
+			name: 'Programação',
 			slug: 'coding',
-			description: 'Programming tutorials, tips, and best practices',
+			description: 'Tutoriais de programação, dicas e melhores práticas',
 		},
 	});
 
@@ -49,9 +49,9 @@ async function main() {
 		where: { slug: 'personal' },
 		update: {},
 		create: {
-			name: 'Personal',
+			name: 'Pessoal',
 			slug: 'personal',
-			description: 'Personal thoughts, experiences, and reflections',
+			description: 'Pensamentos pessoais, experiências e reflexões',
 		},
 	});
 
@@ -59,9 +59,9 @@ async function main() {
 		where: { slug: 'travel' },
 		update: {},
 		create: {
-			name: 'Travel',
+			name: 'Viagem',
 			slug: 'travel',
-			description: 'Travel adventures, tips, and destination guides',
+			description: 'Aventuras de viagem, dicas e guias de destinos',
 		},
 	});
 
@@ -69,9 +69,9 @@ async function main() {
 		where: { slug: 'lifestyle' },
 		update: {},
 		create: {
-			name: 'Lifestyle',
+			name: 'Estilo de Vida',
 			slug: 'lifestyle',
-			description: 'Articles about health, wellness, and balanced living',
+			description: 'Artigos sobre saúde, bem-estar e vida equilibrada',
 		},
 	});
 

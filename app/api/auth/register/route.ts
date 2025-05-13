@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 		const { email, password, name } = await request.json();
 
 		if (!email || !password) {
-			return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+			return NextResponse.json({ error: 'Email e senha são obrigatórios' }, { status: 400 });
 		}
 
 		const { user, verificationToken } = await registerUser(email, password, name);
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
 		return NextResponse.json({
 			user,
-			message: 'Registration successful! Please check your email to verify your account.',
+			message: 'Registro realizado com sucesso! Por favor, verifique seu email para confirmar sua conta.',
 		});
 	} catch (error) {
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });

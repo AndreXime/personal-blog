@@ -17,7 +17,7 @@ export default async function Home() {
 		<main className="container mx-auto px-4 py-8">
 			<section className="mb-12">
 				<div className="flex justify-between items-center mb-6">
-					<h2 className="text-3xl font-bold">Latest Posts</h2>
+					<h2 className="text-3xl font-bold">Posts Recentes</h2>
 					<SearchBar />
 				</div>
 
@@ -43,14 +43,14 @@ export default async function Home() {
 					<Link
 						href="/blog"
 						className="inline-flex items-center text-primary hover:underline">
-						View all posts
+						Ver todos os posts
 						<ArrowRight className="ml-2 h-4 w-4" />
 					</Link>
 				</div>
 			</section>
 
 			<section className="mb-12">
-				<h2 className="text-3xl font-bold mb-6">Popular Categories</h2>
+				<h2 className="text-3xl font-bold mb-6">Categorias Populares</h2>
 				<div className="flex flex-wrap gap-3">
 					{categories.slice(0, 5).map((category) => (
 						<Link

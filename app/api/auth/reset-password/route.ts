@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 		const { email } = await request.json();
 
 		if (!email) {
-			return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+			return NextResponse.json({ error: 'O email é obrigatório' }, { status: 400 });
 		}
 
 		const resetToken = await requestPasswordReset(email);
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 		console.log(`Reset token for ${email}: ${resetToken}`);
 
 		return NextResponse.json({
-			message: 'Password reset email sent! Please check your inbox for further instructions.',
+			message: 'Email de redefinição de senha enviado! Por favor, verifique sua caixa de entrada para mais instruções.',
 		});
 	} catch (error) {
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });
@@ -28,12 +28,14 @@ export async function PUT(request: Request) {
 		const { token, password } = await request.json();
 
 		if (!token || !password) {
-			return NextResponse.json({ error: 'Token and password are required' }, { status: 400 });
+			return NextResponse.json({ error: 'Token e senha são obrigatórios' }, { status: 400 });
 		}
 
 		await resetPassword(token, password);
 
-		return NextResponse.json({ message: 'Password reset successful! You can now log in with your new password.' });
+		return NextResponse.json({
+			message: 'Redefinição de senha realizada com sucesso! Você já pode entrar com sua nova senha.',
+		});
 	} catch (error) {
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });
 	}

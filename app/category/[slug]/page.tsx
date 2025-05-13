@@ -14,14 +14,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 	if (!category) {
 		return {
-			title: 'Category Not Found',
-			description: "The category you're looking for doesn't exist",
+			title: 'Categoria Não Encontrada',
+			description: 'A categoria que você está procurando não existe',
 		};
 	}
 
 	return {
-		title: `${category.name} | Personal Blog`,
-		description: category.description || `Browse all posts in the ${category.name} category`,
+		title: `${category.name} | Blog Pessoal`,
+		description: category.description || `Navegue por todos os posts na categoria ${category.name}`,
 	};
 }
 
@@ -38,14 +38,14 @@ export default async function CategoryPage({ params }: PageProps) {
 		<main className="container mx-auto px-4 py-8">
 			<div className="max-w-5xl mx-auto">
 				<div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-					<h1 className="text-4xl font-bold">Category: {category.name}</h1>
+					<h1 className="text-4xl font-bold">Categoria: {category.name}</h1>
 					<SearchBar />
 				</div>
 
 				{category.description && <p className="text-muted-foreground mb-8">{category.description}</p>}
 
 				<p className="mb-8 text-muted-foreground">
-					Browsing {posts.length} post{posts.length === 1 ? '' : 's'} in {category.name}
+					Visualizando {posts.length} post{posts.length === 1 ? '' : 's'} na categoria {category.name}
 				</p>
 
 				{posts.length > 0 ? (
@@ -59,8 +59,8 @@ export default async function CategoryPage({ params }: PageProps) {
 					</div>
 				) : (
 					<div className="text-center py-12">
-						<p className="text-lg mb-4">No posts found in this category.</p>
-						<p>Check back later for new content.</p>
+						<p className="text-lg mb-4">Nenhum post encontrado nesta categoria.</p>
+						<p>Volte mais tarde para conferir novos conteúdos.</p>
 					</div>
 				)}
 			</div>

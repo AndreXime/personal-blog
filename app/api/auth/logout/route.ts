@@ -5,7 +5,7 @@ import { getErrorMessage } from '@/lib/utils';
 export async function POST() {
 	try {
 		await logoutUser();
-		return NextResponse.json({ message: 'Logged out successfully' });
+		return NextResponse.json({ message: 'Logout realizado com sucesso' });
 	} catch (error) {
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 });
 	}
