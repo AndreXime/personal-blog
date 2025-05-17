@@ -9,6 +9,7 @@ async function main() {
 		where: { email: 'john@example.com' },
 		update: {
 			name: 'John Doe',
+			jobTitle: 'Desenvolvedor Full Stack',
 			role: 'admin',
 			password: await hash('senha123'),
 			bio: 'Escritor, desenvolvedor e entusiasta de tecnologia com mais de 10 anos de experiência no setor de tecnologia.',
@@ -17,6 +18,7 @@ async function main() {
 		create: {
 			email: 'john@example.com',
 			name: 'John Doe',
+			jobTitle: 'Desenvolvedor Full Stack',
 			role: 'admin',
 			password: await hash('senha123'),
 			bio: 'Escritor, desenvolvedor e entusiasta de tecnologia com mais de 10 anos de experiência no setor de tecnologia.',

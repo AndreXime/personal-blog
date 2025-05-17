@@ -1,9 +1,9 @@
-import { prisma } from '../../lib/prisma';
-import { hashPassword, verifyPassword } from '../../lib/auth/password';
-import { generateToken, verifyToken } from '../../lib/auth/jwt';
+import { prisma } from '@/lib/prisma';
+import { hashPassword, verifyPassword } from './password';
+import { generateToken, verifyToken } from './jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { cookies } from 'next/headers';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@/prisma/client';
 
 // Cookie name for storing the auth token
 const AUTH_COOKIE = 'auth_token';
@@ -16,9 +16,6 @@ const COOKIE_OPTIONS = {
 	path: '/',
 };
 
-/**
- * Register a new user
- */
 export async function registerUser(email: string, password: string, name?: string) {
 	// Ensure only one user can be registered
 	const userCount = await prisma.user.count();
@@ -38,31 +35,40 @@ export async function registerUser(email: string, password: string, name?: strin
 	// Hash the password
 	const hashedPassword = await hashPassword(password);
 
-	// Generate verification token
-	const verificationToken = uuidv4();
-
 	// Create the user
 	const user = await prisma.user.create({
 		data: {
 			email,
 			password: hashedPassword,
 			name: name || email.split('@')[0],
-			verificationToken,
+			role: 'admin',
 		},
 	});
+
+	const token = await generateToken({
+		id: user.id,
+		email: user.email,
+		role: user.role,
+	});
+
+	// Create a session
+	await prisma.session.create({
+		data: {
+			userId: user.id,
+			token,
+			expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 7 days
+		},
+	});
+
+	// Set the cookie
+	(await cookies()).set(AUTH_COOKIE, token, COOKIE_OPTIONS);
 
 	// Remove sensitive data
 	const { password: _, ...userWithoutPassword } = user;
 	void _;
-	return {
-		user: userWithoutPassword,
-		verificationToken,
-	};
+	return userWithoutPassword;
 }
 
-/**
- * Login a user
- */
 export async function loginUser(email: string, password: string) {
 	// Find the user
 	const user = await prisma.user.findUnique({
@@ -92,7 +98,7 @@ export async function loginUser(email: string, password: string) {
 		data: {
 			userId: user.id,
 			token,
-			expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+			expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 7 days
 		},
 	});
 
@@ -106,9 +112,6 @@ export async function loginUser(email: string, password: string) {
 	return userWithoutPassword;
 }
 
-/**
- * Logout a user
- */
 export async function logoutUser() {
 	const cookie = await cookies();
 	const token = cookie.get(AUTH_COOKIE)?.value;
@@ -121,9 +124,6 @@ export async function logoutUser() {
 	}
 }
 
-/**
- * Get the current user from the cookie
- */
 export async function getCurrentUser() {
 	const token = (await cookies()).get(AUTH_COOKIE)?.value;
 
@@ -153,9 +153,6 @@ export async function getCurrentUser() {
 	return userWithoutPassword;
 }
 
-/**
- * Request a password reset
- */
 export async function requestPasswordReset(email: string) {
 	const user = await prisma.user.findUnique({
 		where: { email },
@@ -181,9 +178,6 @@ export async function requestPasswordReset(email: string) {
 	return resetToken;
 }
 
-/**
- * Reset a password
- */
 export async function resetPassword(token: string, newPassword: string) {
 	const user = await prisma.user.findFirst({
 		where: {
@@ -212,43 +206,13 @@ export async function resetPassword(token: string, newPassword: string) {
 	});
 }
 
-/**
- * Verify a user's email
- */
-export async function verifyEmail(token: string) {
-	const user = await prisma.user.findFirst({
-		where: {
-			verificationToken: token,
-		},
-	});
-
-	if (!user) {
-		throw new Error('Invalid token');
-	}
-
-	// Update the user
-	await prisma.user.update({
-		where: { id: user.id },
-		data: {
-			emailVerified: true,
-			verificationToken: null,
-		},
-	});
-}
-
-/**
- * Update a user's profile
- */
-export async function updateUserProfile(userId: string, data: Prisma.UserUpdateInput) {
+export async function updateUserProfile(userId: string, data: Prisma.UserUpdateArgs['data']) {
 	return prisma.user.update({
 		where: { id: userId },
 		data,
 	});
 }
 
-/**
- * Change a user's password
- */
 export async function changePassword(userId: string, currentPassword: string, newPassword: string) {
 	const user = await prisma.user.findUnique({
 		where: { id: userId },

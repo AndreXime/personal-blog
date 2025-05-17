@@ -7,35 +7,49 @@ import { useAuth } from '@/lib/auth/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from '@/hooks/use-toast';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
-export function SettingsForm() {
-	const { changePassword } = useAuth();
+export function SecurityTab() {
+	const { changePassword, user } = useAuth();
 	const [currentPassword, setCurrentPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	const [success, setSuccess] = useState(false);
 
 	const handleChangePassword = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsLoading(true);
-		setError(null);
-		setSuccess(false);
 
 		// Validate password match
 		if (newPassword !== confirmPassword) {
-			setError('New passwords do not match');
+			toast({
+				title: 'Error',
+				description: 'New passwords do not match',
+				variant: 'destructive',
+			});
 			setIsLoading(false);
 			return;
 		}
 
 		// Validate password strength
 		if (newPassword.length < 8) {
-			setError('Password must be at least 8 characters long');
+			toast({
+				title: 'Error',
+				description: 'Password must be at least 8 characters long',
+				variant: 'destructive',
+			});
 			setIsLoading(false);
 			return;
 		}
@@ -44,47 +58,48 @@ export function SettingsForm() {
 			const { error, success } = await changePassword(currentPassword, newPassword);
 
 			if (error) {
-				setError(error);
+				toast({
+					title: 'Error',
+					description: error,
+					variant: 'destructive',
+				});
 			} else if (success) {
-				setSuccess(true);
+				toast({
+					title: 'Success',
+					description: 'Password updated successfully!',
+				});
 				setCurrentPassword('');
 				setNewPassword('');
 				setConfirmPassword('');
 			}
 		} catch (err) {
-			setError('An unexpected error occurred');
+			toast({
+				title: 'Error',
+				description: 'An unexpected error occurred',
+				variant: 'destructive',
+			});
 			console.error(err);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	const handleDeleteAccount = async () => {
+		// This would be implemented with a call to your API
+		toast({
+			title: 'Not implemented',
+			description: 'Account deletion functionality is not yet implemented',
+		});
+	};
+
 	return (
 		<div className="space-y-6">
-			<h1 className="text-3xl font-bold mb-6">Account Settings</h1>
-
 			<Card>
 				<CardHeader>
 					<CardTitle>Change Password</CardTitle>
 					<CardDescription>Update your account password</CardDescription>
 				</CardHeader>
 				<CardContent>
-					{error && (
-						<Alert
-							variant="destructive"
-							className="mb-4">
-							<AlertCircle className="h-4 w-4" />
-							<AlertDescription>{error}</AlertDescription>
-						</Alert>
-					)}
-
-					{success && (
-						<Alert className="bg-green-50 text-green-800 border-green-200 mb-4">
-							<CheckCircle2 className="h-4 w-4 text-green-600" />
-							<AlertDescription>Password updated successfully!</AlertDescription>
-						</Alert>
-					)}
-
 					<form
 						onSubmit={handleChangePassword}
 						className="space-y-4">
@@ -141,7 +156,28 @@ export function SettingsForm() {
 					</p>
 				</CardContent>
 				<CardFooter>
-					<Button variant="destructive">Delete Account</Button>
+					<AlertDialog>
+						<AlertDialogTrigger asChild>
+							<Button variant="destructive">Delete Account</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+								<AlertDialogDescription>
+									This action cannot be undone. This will permanently delete your account and remove your data from our
+									servers.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={handleDeleteAccount}
+									className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+									Delete Account
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				</CardFooter>
 			</Card>
 		</div>

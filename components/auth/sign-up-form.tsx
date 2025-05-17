@@ -3,12 +3,12 @@
 import type React from 'react';
 
 import { useState } from 'react';
-import { useAuth } from '@/lib/auth/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function SignUpForm() {
 	const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export function SignUpForm() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
-	const { signUp } = useAuth();
+	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -41,12 +41,20 @@ export function SignUpForm() {
 		}
 
 		try {
-			const { error, success } = await signUp(email, password, name);
+			const response = await fetch('/api/auth/register', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email, password, name }),
+			});
 
-			if (error) {
-				setError(error);
-			} else if (success) {
+			if (response.ok) {
 				setSuccess(true);
+				router.refresh();
+			} else {
+				const data = await response.json();
+				setError(data.error);
 			}
 		} catch (err) {
 			setError('An unexpected error occurred');
@@ -59,8 +67,8 @@ export function SignUpForm() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Create an account</h1>
-				<p className="text-muted-foreground">Enter your details below to create your account</p>
+				<h1 className="text-2xl font-bold">Criar uma conta</h1>
+				<p className="text-muted-foreground">Digite seus dados abaixo para criar sua conta</p>
 			</div>
 
 			{error && (
@@ -73,7 +81,7 @@ export function SignUpForm() {
 			{success && (
 				<Alert className="bg-green-50 text-green-800 border-green-200">
 					<CheckCircle2 className="h-4 w-4 text-green-600" />
-					<AlertDescription>Registration successful! Please check your email to confirm your account.</AlertDescription>
+					<AlertDescription>Cadastro realizado com sucesso!</AlertDescription>
 				</Alert>
 			)}
 
@@ -82,7 +90,7 @@ export function SignUpForm() {
 					onSubmit={handleSubmit}
 					className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="name">Name</Label>
+						<Label htmlFor="name">Nome</Label>
 						<Input
 							id="name"
 							placeholder="John Doe"
@@ -92,11 +100,11 @@ export function SignUpForm() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="email">Email</Label>
+						<Label htmlFor="email">E-mail</Label>
 						<Input
 							id="email"
 							type="email"
-							placeholder="name@example.com"
+							placeholder="nome@exemplo.com"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
@@ -104,7 +112,7 @@ export function SignUpForm() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password">Senha</Label>
 						<Input
 							id="password"
 							type="password"
@@ -115,7 +123,7 @@ export function SignUpForm() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="confirmPassword">Confirm Password</Label>
+						<Label htmlFor="confirmPassword">Confirmar Senha</Label>
 						<Input
 							id="confirmPassword"
 							type="password"
@@ -129,7 +137,7 @@ export function SignUpForm() {
 						type="submit"
 						className="w-full"
 						disabled={isLoading}>
-						{isLoading ? 'Creating account...' : 'Sign Up'}
+						{isLoading ? 'Criando conta...' : 'Cadastrar'}
 					</Button>
 				</form>
 			)}

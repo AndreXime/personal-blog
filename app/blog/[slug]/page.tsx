@@ -76,7 +76,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
 					<div className="mb-6">
 						<Image
-							src={post.coverImage || '/placeholder.svg?height=600&width=1200'}
+							src={post.coverImage ? `/api/${post.coverImage}` : '/placeholder.svg?height=600&width=1200'}
 							alt={post.title}
 							width={1200}
 							height={600}
@@ -119,6 +119,7 @@ export default async function PostPage({ params }: PostPageProps) {
 							/>
 							<div>
 								<h3 className="font-semibold">{post.author?.name || 'Anonymous'}</h3>
+								<p className="text-muted-foreground text-sm">{post.author?.jobTitle || ''}</p>
 								<p className="text-muted-foreground text-sm">{post.author?.bio || 'Escritor e criador de conteúdo.'}</p>
 							</div>
 						</div>

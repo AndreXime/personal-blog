@@ -6,7 +6,7 @@ import type {
 } from '../prisma/client';
 
 export type Post = PrismaPost;
-export type User = PrismaUser;
+export type User = Omit<PrismaUser, 'password'>;
 export type Category = PrismaCategory;
 export type Tag = PrismaTag;
 

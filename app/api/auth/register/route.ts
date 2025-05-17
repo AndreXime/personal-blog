@@ -10,14 +10,11 @@ export async function POST(request: Request) {
 			return NextResponse.json({ error: 'Email e senha são obrigatórios' }, { status: 400 });
 		}
 
-		const { user, verificationToken } = await registerUser(email, password, name);
-
-		// In a real application, you would send a verification email here
-		console.log(`Verification token for ${email}: ${verificationToken}`);
+		const user = await registerUser(email, password, name);
 
 		return NextResponse.json({
 			user,
-			message: 'Registro realizado com sucesso! Por favor, verifique seu email para confirmar sua conta.',
+			message: 'Registro realizado com sucesso!',
 		});
 	} catch (error) {
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });

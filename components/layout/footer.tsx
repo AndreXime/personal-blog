@@ -1,7 +1,12 @@
+'use client';
 import Link from 'next/link';
 import { Github, Twitter, Linkedin } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
+	const pathname = usePathname();
+	if (pathname.startsWith('/admin')) return null;
+
 	return (
 		<footer className="border-t py-8 mt-12">
 			<div className="container mx-auto px-4">
@@ -97,10 +102,6 @@ export function Footer() {
 							</li>
 						</ul>
 					</div>
-				</div>
-
-				<div className="mt-8 pt-8 text-center text-muted-foreground">
-					<p>© {new Date().getFullYear()} Personal Blog. All rights reserved.</p>
 				</div>
 			</div>
 		</footer>

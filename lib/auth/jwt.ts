@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 
 // Secret key for JWT signing and verification
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key-at-least-32-chars-long');
+export const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key-at-least-32-chars-long');
 
 // Token expiration time
 const TOKEN_EXPIRATION = '7d'; // 7 days

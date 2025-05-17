@@ -29,6 +29,7 @@ export async function PUT(request: Request) {
 
 		return NextResponse.json({ user: updatedUser });
 	} catch (error) {
+		console.log(error);
 		return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 });
 	}
 }

@@ -3,19 +3,17 @@
 import type React from 'react';
 
 import { useState } from 'react';
-import { useAuth } from '@/lib/auth/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
-export function ForgotPasswordForm() {
+export function ForgotPasswordForm({ setTab }: { setTab: React.Dispatch<React.SetStateAction<boolean>> }) {
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
-	const { resetPassword } = useAuth();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -24,12 +22,19 @@ export function ForgotPasswordForm() {
 		setSuccess(false);
 
 		try {
-			const { error, success } = await resetPassword(email);
+			const response = await fetch('/api/auth/reset-password', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email }),
+			});
 
-			if (error) {
-				setError(error);
-			} else if (success) {
+			if (response.ok) {
 				setSuccess(true);
+			} else {
+				const data = await response.json();
+				setError(data.error);
 			}
 		} catch (err) {
 			setError('An unexpected error occurred');
@@ -42,8 +47,8 @@ export function ForgotPasswordForm() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Forgot Password</h1>
-				<p className="text-muted-foreground">Enter your email to reset your password</p>
+				<h1 className="text-2xl font-bold">Esqueci a Senha</h1>
+				<p className="text-muted-foreground">Digite seu e-mail para redefinir sua senha</p>
 			</div>
 
 			{error && (
@@ -57,7 +62,7 @@ export function ForgotPasswordForm() {
 				<Alert className="bg-green-50 text-green-800 border-green-200">
 					<CheckCircle2 className="h-4 w-4 text-green-600" />
 					<AlertDescription>
-						Password reset email sent! Please check your inbox for further instructions.
+						E-mail de redefinição de senha enviado! Verifique sua caixa de entrada para mais instruções.
 					</AlertDescription>
 				</Alert>
 			)}
@@ -82,14 +87,18 @@ export function ForgotPasswordForm() {
 						type="submit"
 						className="w-full"
 						disabled={isLoading}>
-						{isLoading ? 'Sending reset email...' : 'Reset Password'}
+						{isLoading ? 'Enviando e-mail de redefinição...' : 'Redefinir Senha'}
 					</Button>
 				</form>
 			)}
 
 			<div className="text-center text-sm">
-				Remember your password?
-				<button className="text-primary hover:underline">Sign in</button>
+				Lembrou sua senha?
+				<button
+					onClick={() => setTab(false)}
+					className="text-primary hover:underline">
+					Entrar
+				</button>
 			</div>
 		</div>
 	);

@@ -12,9 +12,9 @@ export function Header() {
 	const pathname = usePathname();
 
 	const routes = [
-		{ href: '/', label: 'Home' },
+		{ href: '/', label: 'Inicio' },
 		{ href: '/blog', label: 'Blog' },
-		{ href: '/about', label: 'About' },
+		{ href: '/about', label: 'Sobre' },
 	];
 
 	const isActive = (path: string) => {
@@ -27,7 +27,7 @@ export function Header() {
 	return (
 		<header className="border-b sticky top-0 z-40 bg-background">
 			<div className="container mx-auto px-4">
-				<div className="flex h-16 items-center justify-between">
+				<div className="flex relative h-16 items-center justify-between">
 					<div className="flex items-center gap-2">
 						<Link
 							href="/"
@@ -36,7 +36,7 @@ export function Header() {
 						</Link>
 					</div>
 
-					<nav className="hidden md:flex items-center gap-6">
+					<nav className="hidden md:flex items-center gap-6 absolute left-1/2 transform -translate-x-1/2">
 						{routes.map((route) => (
 							<Link
 								key={route.href}

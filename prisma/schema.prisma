@@ -12,12 +12,11 @@ model User {
   id                String    @id @default(uuid())
   email             String    @unique
   name              String?
+  jobTitle          String?   @map("job_title")
   password          String?
   avatarUrl         String?   @map("avatar_url")
   bio               String?
   role              String    @default("user")
-  emailVerified     Boolean   @default(false) @map("email_verified")
-  verificationToken String?   @map("verification_token")
   resetToken        String?   @map("reset_token")
   resetTokenExpiry  DateTime? @map("reset_token_expiry")
   createdAt         DateTime  @default(now()) @map("created_at")
@@ -69,7 +68,8 @@ model Post {
   content     String
   coverImage  String?        @map("cover_image")
   readingTime Int            @default(0) @map("reading_time")
-  published   Boolean        @default(false)
+  imageData   Bytes?         @map("image_data")
+  published   Boolean        @default(true)
   featured    Boolean        @default(false)
   authorId    String?        @map("author_id")
   createdAt   DateTime       @default(now()) @map("created_at")

@@ -76,8 +76,8 @@ export function ResetPasswordForm() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Reset Password</h1>
-				<p className="text-muted-foreground">Enter your new password</p>
+				<h1 className="text-2xl font-bold">Redefinir Senha</h1>
+				<p className="text-muted-foreground">Digite sua nova senha</p>
 			</div>
 
 			{error && (
@@ -91,7 +91,7 @@ export function ResetPasswordForm() {
 				<Alert className="bg-green-50 text-green-800 border-green-200">
 					<CheckCircle2 className="h-4 w-4 text-green-600" />
 					<AlertDescription>
-						Password reset successful! You will be redirected to the sign in page shortly.
+						Senha redefinida com sucesso! Você será redirecionado para a página de login em breve.
 					</AlertDescription>
 				</Alert>
 			)}
@@ -101,7 +101,7 @@ export function ResetPasswordForm() {
 					onSubmit={handleSubmit}
 					className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="password">New Password</Label>
+						<Label htmlFor="password">Nova Senha</Label>
 						<Input
 							id="password"
 							type="password"
@@ -112,7 +112,7 @@ export function ResetPasswordForm() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="confirmPassword">Confirm New Password</Label>
+						<Label htmlFor="confirmPassword">Confirmar Nova Senha</Label>
 						<Input
 							id="confirmPassword"
 							type="password"
@@ -126,7 +126,7 @@ export function ResetPasswordForm() {
 						type="submit"
 						className="w-full"
 						disabled={isLoading}>
-						{isLoading ? 'Resetting password...' : 'Reset Password'}
+						{isLoading ? 'Redefinindo senha...' : 'Redefinir Senha'}
 					</Button>
 				</form>
 			)}

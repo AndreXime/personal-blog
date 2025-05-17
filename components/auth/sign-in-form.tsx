@@ -4,7 +4,6 @@ import type React from 'react';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,7 +17,6 @@ export function SignInForm() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [Tab, setTab] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const { signIn } = useAuth();
 	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -27,15 +25,22 @@ export function SignInForm() {
 		setError(null);
 
 		try {
-			const { error, success } = await signIn(email, password);
+			const response = await fetch('/api/auth/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email, password }),
+			});
 
-			if (error) {
-				setError(error);
-			} else if (success) {
-				router.push('/admin/panel');
+			if (response.ok) {
+				router.refresh();
+			} else {
+				const data = await response.json();
+				setError(data.error);
 			}
 		} catch (err) {
-			setError('An unexpected error occurred');
+			setError('Ocorreu um erro inesperado');
 			console.error(err);
 		} finally {
 			setIsLoading(false);
@@ -43,14 +48,14 @@ export function SignInForm() {
 	};
 
 	if (Tab) {
-		return <ForgotPasswordForm />;
+		return <ForgotPasswordForm setTab={setTab} />;
 	}
 
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Sign In</h1>
-				<p className="text-muted-foreground">Enter your email and password to sign in to your account</p>
+				<h1 className="text-2xl font-bold">Entrar</h1>
+				<p className="text-muted-foreground">Digite seu e-mail e senha para entrar na sua conta</p>
 			</div>
 
 			{error && (
@@ -64,11 +69,11 @@ export function SignInForm() {
 				onSubmit={handleSubmit}
 				className="space-y-4">
 				<div className="space-y-2">
-					<Label htmlFor="email">Email</Label>
+					<Label htmlFor="email">E-mail</Label>
 					<Input
 						id="email"
 						type="email"
-						placeholder="name@example.com"
+						placeholder="nome@exemplo.com"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
@@ -77,11 +82,11 @@ export function SignInForm() {
 
 				<div className="space-y-2">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password">Senha</Label>
 						<button
 							onClick={() => setTab(true)}
 							className="text-sm text-primary hover:underline">
-							Forgot password?
+							Esqueceu a senha?
 						</button>
 					</div>
 					<Input
@@ -97,7 +102,7 @@ export function SignInForm() {
 					type="submit"
 					className="w-full"
 					disabled={isLoading}>
-					{isLoading ? 'Signing in...' : 'Sign In'}
+					{isLoading ? 'Entrando...' : 'Entrar'}
 				</Button>
 			</form>
 		</div>
