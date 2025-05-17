@@ -321,8 +321,8 @@ export function CategoriesTab() {
 												<AlertDialogHeader>
 													<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 													<AlertDialogDescription>
-														Isso irá excluir permanentemente a categoria "{category.name}" e removê-la de todas as
-														postagens associadas.
+														Isso irá excluir permanentemente a categoria &quot;{category.name}&quot; e removê-la de
+														todas as postagens associadas.
 													</AlertDialogDescription>
 												</AlertDialogHeader>
 												<AlertDialogFooter>

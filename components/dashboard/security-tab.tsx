@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/alert-dialog';
 
 export function SecurityTab() {
-	const { changePassword, user } = useAuth();
+	const { changePassword } = useAuth();
 	const [currentPassword, setCurrentPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');

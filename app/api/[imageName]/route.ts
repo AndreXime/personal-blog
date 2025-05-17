@@ -24,7 +24,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ imag
 		const headers = new Headers();
 		headers.set('Content-Type', contentType);
 		return new NextResponse(record.imageData, { headers });
-	} catch (error) {
+	} catch {
 		return new NextResponse('Internal Server Error', { status: 500 });
 	}
 }

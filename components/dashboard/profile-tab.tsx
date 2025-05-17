@@ -74,10 +74,10 @@ export function ProfileTab() {
 				title: 'Sucesso',
 				description: 'Avatar enviado com sucesso!',
 			});
-		} catch (error: any) {
+		} catch {
 			toast({
 				title: 'Erro de envio',
-				description: error.message || 'Falha ao enviar avatar',
+				description: 'Falha ao enviar avatar',
 				variant: 'destructive',
 			});
 		} finally {

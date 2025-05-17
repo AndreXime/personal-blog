@@ -288,7 +288,7 @@ export function PostsTab() {
 													<AlertDialogHeader>
 														<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 														<AlertDialogDescription>
-															Isso irá excluir permanentemente a publicação "{post.title}".
+															Isso irá excluir permanentemente a publicação &quot;{post.title}&quot;.
 														</AlertDialogDescription>
 													</AlertDialogHeader>
 													<AlertDialogFooter>

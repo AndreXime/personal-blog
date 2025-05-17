@@ -301,8 +301,8 @@ export function TagsTab() {
 												<AlertDialogHeader>
 													<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 													<AlertDialogDescription>
-														Isso irá excluir permanentemente a etiqueta "{tag.name}" e removê-la de todas as postagens
-														associadas.
+														Isso irá excluir permanentemente a etiqueta &quot;{tag.name}&quot; e removê-la de todas as
+														postagens associadas.
 													</AlertDialogDescription>
 												</AlertDialogHeader>
 												<AlertDialogFooter>
