@@ -32,7 +32,7 @@ export function Header() {
 						<Link
 							href="/"
 							className="font-bold text-xl">
-							Personal Blog
+							André Blog
 						</Link>
 					</div>
 
@@ -72,7 +72,7 @@ export function Header() {
 								<Link
 									href="/"
 									className="font-bold text-xl">
-									Personal Blog
+									André Blog
 								</Link>
 							</div>
 

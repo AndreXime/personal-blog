@@ -35,8 +35,8 @@ export function SecurityTab() {
 		// Validate password match
 		if (newPassword !== confirmPassword) {
 			toast({
-				title: 'Error',
-				description: 'New passwords do not match',
+				title: 'Erro',
+				description: 'As novas senhas não coincidem',
 				variant: 'destructive',
 			});
 			setIsLoading(false);
@@ -46,8 +46,8 @@ export function SecurityTab() {
 		// Validate password strength
 		if (newPassword.length < 8) {
 			toast({
-				title: 'Error',
-				description: 'Password must be at least 8 characters long',
+				title: 'Erro',
+				description: 'A senha deve ter pelo menos 8 caracteres',
 				variant: 'destructive',
 			});
 			setIsLoading(false);
@@ -59,14 +59,14 @@ export function SecurityTab() {
 
 			if (error) {
 				toast({
-					title: 'Error',
+					title: 'Erro',
 					description: error,
 					variant: 'destructive',
 				});
 			} else if (success) {
 				toast({
-					title: 'Success',
-					description: 'Password updated successfully!',
+					title: 'Sucesso',
+					description: 'Senha atualizada com sucesso!',
 				});
 				setCurrentPassword('');
 				setNewPassword('');
@@ -74,8 +74,8 @@ export function SecurityTab() {
 			}
 		} catch (err) {
 			toast({
-				title: 'Error',
-				description: 'An unexpected error occurred',
+				title: 'Erro',
+				description: 'Ocorreu um erro inesperado',
 				variant: 'destructive',
 			});
 			console.error(err);
@@ -87,8 +87,8 @@ export function SecurityTab() {
 	const handleDeleteAccount = async () => {
 		// This would be implemented with a call to your API
 		toast({
-			title: 'Not implemented',
-			description: 'Account deletion functionality is not yet implemented',
+			title: 'Não implementado',
+			description: 'A funcionalidade de exclusão de conta ainda não foi implementada',
 		});
 	};
 
@@ -96,15 +96,15 @@ export function SecurityTab() {
 		<div className="space-y-6">
 			<Card>
 				<CardHeader>
-					<CardTitle>Change Password</CardTitle>
-					<CardDescription>Update your account password</CardDescription>
+					<CardTitle>Alterar Senha</CardTitle>
+					<CardDescription>Atualize a senha da sua conta</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<form
 						onSubmit={handleChangePassword}
 						className="space-y-4">
 						<div className="space-y-2">
-							<Label htmlFor="currentPassword">Current Password</Label>
+							<Label htmlFor="currentPassword">Senha Atual</Label>
 							<Input
 								id="currentPassword"
 								type="password"
@@ -115,7 +115,7 @@ export function SecurityTab() {
 						</div>
 
 						<div className="space-y-2">
-							<Label htmlFor="newPassword">New Password</Label>
+							<Label htmlFor="newPassword">Nova Senha</Label>
 							<Input
 								id="newPassword"
 								type="password"
@@ -126,7 +126,7 @@ export function SecurityTab() {
 						</div>
 
 						<div className="space-y-2">
-							<Label htmlFor="confirmPassword">Confirm New Password</Label>
+							<Label htmlFor="confirmPassword">Confirmar Nova Senha</Label>
 							<Input
 								id="confirmPassword"
 								type="password"
@@ -139,7 +139,7 @@ export function SecurityTab() {
 						<Button
 							type="submit"
 							disabled={isLoading}>
-							{isLoading ? 'Updating...' : 'Update Password'}
+							{isLoading ? 'Atualizando...' : 'Atualizar Senha'}
 						</Button>
 					</form>
 				</CardContent>
@@ -147,8 +147,8 @@ export function SecurityTab() {
 
 			<Card>
 				<CardHeader>
-					<CardTitle>Delete Account</CardTitle>
-					<CardDescription>Permanently delete your account and all your data</CardDescription>
+					<CardTitle>Excluir Conta</CardTitle>
+					<CardDescription>Excluir permanentemente sua conta e todos os seus dados</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<p className="text-muted-foreground">
@@ -158,22 +158,22 @@ export function SecurityTab() {
 				<CardFooter>
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
-							<Button variant="destructive">Delete Account</Button>
+							<Button variant="destructive">Excluir Conta</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+								<AlertDialogTitle>Tem certeza absoluta?</AlertDialogTitle>
 								<AlertDialogDescription>
-									This action cannot be undone. This will permanently delete your account and remove your data from our
-									servers.
+									Esta ação não pode ser desfeita. Isso irá excluir permanentemente sua conta e remover seus dados dos
+									nossos servidores.
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
-								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogCancel>Cancelar</AlertDialogCancel>
 								<AlertDialogAction
 									onClick={handleDeleteAccount}
 									className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-									Delete Account
+									Excluir Conta
 								</AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>

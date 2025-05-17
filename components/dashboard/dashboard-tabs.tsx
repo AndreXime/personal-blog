@@ -18,11 +18,11 @@ export function DashboardTabs() {
 			onValueChange={setActiveTab}
 			className="w-full">
 			<TabsList className="grid grid-cols-5 mb-8">
-				<TabsTrigger value="profile">Profile</TabsTrigger>
-				<TabsTrigger value="security">Security</TabsTrigger>
-				<TabsTrigger value="posts">Posts</TabsTrigger>
-				<TabsTrigger value="categories">Categories</TabsTrigger>
-				<TabsTrigger value="tags">Tags</TabsTrigger>
+				<TabsTrigger value="profile">Perfil</TabsTrigger>
+				<TabsTrigger value="security">Segurança</TabsTrigger>
+				<TabsTrigger value="posts">Publicações</TabsTrigger>
+				<TabsTrigger value="categories">Categorias</TabsTrigger>
+				<TabsTrigger value="tags">Etiquetas</TabsTrigger>
 			</TabsList>
 
 			<TabsContent

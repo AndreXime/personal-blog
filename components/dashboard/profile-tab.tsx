@@ -35,20 +35,20 @@ export function ProfileTab() {
 
 			if (error) {
 				toast({
-					title: 'Error',
+					title: 'Erro',
 					description: error,
 					variant: 'destructive',
 				});
 			} else if (success) {
 				toast({
-					title: 'Success',
-					description: 'Profile updated successfully!',
+					title: 'Sucesso',
+					description: 'Perfil atualizado com sucesso!',
 				});
 			}
 		} catch (err) {
 			toast({
-				title: 'Error',
-				description: 'An unexpected error occurred',
+				title: 'Erro',
+				description: 'Ocorreu um erro inesperado',
 				variant: 'destructive',
 			});
 			console.error(err);
@@ -70,9 +70,16 @@ export function ProfileTab() {
 				throw new Error(data.error || 'Error uploading avatar');
 			}
 			setAvatarUrl(data.avatarUrl);
-			toast({ title: 'Success', description: 'Avatar uploaded successfully!' });
+			toast({
+				title: 'Sucesso',
+				description: 'Avatar enviado com sucesso!',
+			});
 		} catch (error: any) {
-			toast({ title: 'Upload Error', description: error.message || 'Failed to upload avatar', variant: 'destructive' });
+			toast({
+				title: 'Erro de envio',
+				description: error.message || 'Falha ao enviar avatar',
+				variant: 'destructive',
+			});
 		} finally {
 			setIsUploading(false);
 		}
@@ -81,8 +88,8 @@ export function ProfileTab() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Profile Information</CardTitle>
-				<CardDescription>Update your personal information</CardDescription>
+				<CardTitle>Informações do Perfil</CardTitle>
+				<CardDescription>Atualize suas informações pessoais</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="flex items-center gap-4 mb-6">
@@ -103,7 +110,7 @@ export function ProfileTab() {
 						</Avatar>
 					</label>
 					<div>
-						<h2 className="text-xl font-semibold">{name || 'Anonymous'}</h2>
+						<h2 className="text-xl font-semibold">{name || 'Anônimo'}</h2>
 						<p className="text-muted-foreground">{user.email}</p>
 					</div>
 				</div>
@@ -112,7 +119,7 @@ export function ProfileTab() {
 					onSubmit={handleSubmit}
 					className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="name">Name</Label>
+						<Label htmlFor="name">Nome</Label>
 						<Input
 							id="name"
 							value={name}
@@ -130,7 +137,7 @@ export function ProfileTab() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="bio">Bio</Label>
+						<Label htmlFor="bio">Biografia</Label>
 						<Textarea
 							id="bio"
 							value={bio}
@@ -142,7 +149,7 @@ export function ProfileTab() {
 					<Button
 						type="submit"
 						disabled={isLoading}>
-						{isLoading ? 'Saving...' : 'Save Changes'}
+						{isLoading ? 'Salvando...' : 'Salvar alterações'}
 					</Button>
 				</form>
 			</CardContent>

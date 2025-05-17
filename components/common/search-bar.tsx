@@ -25,7 +25,7 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
 			className="relative w-full max-w-sm">
 			<input
 				type="text"
-				placeholder="Search posts..."
+				placeholder="Procurar posts..."
 				value={searchQuery}
 				onChange={(e) => setSearchQuery(e.target.value)}
 				className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"

@@ -8,17 +8,17 @@ export function Footer() {
 	if (pathname.startsWith('/admin')) return null;
 
 	return (
-		<footer className="border-t py-8 mt-12">
+		<footer className="border-t py-10 mt-12">
 			<div className="container mx-auto px-4">
-				<div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					<div className="md:col-span-2">
 						<Link
 							href="/"
 							className="font-bold text-xl mb-4 inline-block">
-							Personal Blog
+							André Blog
 						</Link>
 						<p className="text-muted-foreground mb-4">
-							A personal blog about technology, coding, and life experiences.
+							Um blog pessoal sobre tecnologia, programação e dicas do dia a dia.
 						</p>
 						<div className="flex space-x-4">
 							<Link
@@ -43,7 +43,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h3 className="font-semibold mb-4">Navigation</h3>
+						<h3 className="font-semibold mb-4">Navegação</h3>
 						<ul className="space-y-2">
 							<li>
 								<Link
@@ -63,41 +63,7 @@ export function Footer() {
 								<Link
 									href="/about"
 									className="text-muted-foreground hover:text-foreground">
-									About
-								</Link>
-							</li>
-						</ul>
-					</div>
-
-					<div>
-						<h3 className="font-semibold mb-4">Categories</h3>
-						<ul className="space-y-2">
-							<li>
-								<Link
-									href="/category/technology"
-									className="text-muted-foreground hover:text-foreground">
-									Technology
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/category/coding"
-									className="text-muted-foreground hover:text-foreground">
-									Coding
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/category/personal"
-									className="text-muted-foreground hover:text-foreground">
-									Personal
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/category/travel"
-									className="text-muted-foreground hover:text-foreground">
-									Travel
+									Sobre
 								</Link>
 							</li>
 						</ul>

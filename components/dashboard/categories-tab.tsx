@@ -50,8 +50,8 @@ export function CategoriesTab() {
 			} catch (error) {
 				console.error('Error fetching categories:', error);
 				toast({
-					title: 'Error',
-					description: 'Failed to load categories',
+					title: 'Erro',
+					description: 'Falha ao carregar categorias',
 					variant: 'destructive',
 				});
 			} finally {
@@ -86,8 +86,8 @@ export function CategoriesTab() {
 			if (response.ok) {
 				setCategories(categories.filter((category) => category.id !== categoryId));
 				toast({
-					title: 'Success',
-					description: 'Category deleted successfully',
+					title: 'Sucesso',
+					description: 'Categoria excluída com sucesso',
 				});
 			} else {
 				const data = await response.json();
@@ -96,8 +96,8 @@ export function CategoriesTab() {
 		} catch (error) {
 			console.error('Error deleting category:', error);
 			toast({
-				title: 'Error',
-				description: error instanceof Error ? error.message : 'Failed to delete category',
+				title: 'Erro',
+				description: error instanceof Error ? error.message : 'Falha ao excluir categoria',
 				variant: 'destructive',
 			});
 		}
@@ -136,22 +136,22 @@ export function CategoriesTab() {
 				}
 
 				toast({
-					title: 'Success',
-					description: `Category ${editingCategory ? 'updated' : 'created'} successfully`,
+					title: 'Sucesso',
+					description: `Categoria ${editingCategory ? 'atualizada' : 'criada'} com sucesso`,
 				});
 
 				resetForm();
 				setShowForm(false);
 			} else {
 				const data = await response.json();
-				throw new Error(data.error || `Failed to ${editingCategory ? 'update' : 'create'} category`);
+				throw new Error(data.error || `Falha ao ${editingCategory ? 'atualizar' : 'criar'} categoria`);
 			}
 		} catch (error) {
 			console.error('Error submitting category:', error);
 			toast({
-				title: 'Error',
+				title: 'Erro',
 				description:
-					error instanceof Error ? error.message : `Failed to ${editingCategory ? 'update' : 'create'} category`,
+					error instanceof Error ? error.message : `Falha ao ${editingCategory ? 'atualizar' : 'criar'} categoria`,
 				variant: 'destructive',
 			});
 		} finally {
@@ -174,23 +174,25 @@ export function CategoriesTab() {
 	return (
 		<div className="space-y-6">
 			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-semibold">Categories</h2>
+				<h2 className="text-xl font-semibold">Categorias</h2>
 				<Button
 					onClick={() => {
 						resetForm();
 						setShowForm(true);
 					}}>
 					<Plus className="h-4 w-4 mr-2" />
-					New Category
+					Nova Categoria
 				</Button>
 			</div>
 
 			{showForm && (
 				<Card>
 					<CardHeader>
-						<CardTitle>{editingCategory ? 'Edit Category' : 'Create New Category'}</CardTitle>
+						<CardTitle>{editingCategory ? 'Editar Categoria' : 'Criar Nova Categoria'}</CardTitle>
 						<CardDescription>
-							{editingCategory ? 'Update your existing category' : 'Fill in the details to create a new category'}
+							{editingCategory
+								? 'Atualize sua categoria existente'
+								: 'Preencha os detalhes para criar uma nova categoria'}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
@@ -199,7 +201,7 @@ export function CategoriesTab() {
 							className="space-y-4">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label htmlFor="name">Name</Label>
+									<Label htmlFor="name">Nome</Label>
 									<Input
 										id="name"
 										value={name}
@@ -233,7 +235,7 @@ export function CategoriesTab() {
 							</div>
 
 							<div className="space-y-2">
-								<Label htmlFor="description">Description</Label>
+								<Label htmlFor="description">Descrição</Label>
 								<Textarea
 									id="description"
 									value={description}
@@ -250,7 +252,7 @@ export function CategoriesTab() {
 										resetForm();
 										setShowForm(false);
 									}}>
-									Cancel
+									Cancelar
 								</Button>
 								<Button
 									type="submit"
@@ -258,12 +260,12 @@ export function CategoriesTab() {
 									{isSubmitting ? (
 										<>
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-											{editingCategory ? 'Updating...' : 'Creating...'}
+											{editingCategory ? 'Atualizando...' : 'Criando...'}
 										</>
 									) : editingCategory ? (
-										'Update Category'
+										'Atualizar Categoria'
 									) : (
-										'Create Category'
+										'Criar Categoria'
 									)}
 								</Button>
 							</div>
@@ -279,11 +281,11 @@ export function CategoriesTab() {
 			) : categories.length === 0 ? (
 				<Card>
 					<CardContent className="py-8 text-center">
-						<p className="text-muted-foreground">You haven't created any categories yet.</p>
+						<p className="text-muted-foreground">Você ainda não criou nenhuma categoria.</p>
 						<Button
 							className="mt-4"
 							onClick={() => setShowForm(true)}>
-							Create your first category
+							Crie sua primeira categoria
 						</Button>
 					</CardContent>
 				</Card>
@@ -317,18 +319,18 @@ export function CategoriesTab() {
 											</AlertDialogTrigger>
 											<AlertDialogContent>
 												<AlertDialogHeader>
-													<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+													<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 													<AlertDialogDescription>
-														This will permanently delete the category "{category.name}" and remove it from all
-														associated posts.
+														Isso irá excluir permanentemente a categoria "{category.name}" e removê-la de todas as
+														postagens associadas.
 													</AlertDialogDescription>
 												</AlertDialogHeader>
 												<AlertDialogFooter>
-													<AlertDialogCancel>Cancel</AlertDialogCancel>
+													<AlertDialogCancel>Cancelar</AlertDialogCancel>
 													<AlertDialogAction
 														onClick={() => handleDeleteCategory(category.id)}
 														className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-														Delete
+														Excluir
 													</AlertDialogAction>
 												</AlertDialogFooter>
 											</AlertDialogContent>

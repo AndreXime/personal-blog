@@ -6,6 +6,7 @@ import { Calendar, Clock, Tag } from 'lucide-react';
 
 import { ShareButtons } from '@/components/posts/share-buttons';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
+import { convertMarkdownToHtml } from '@/lib/utils';
 
 type PostPageProps = {
 	params: Promise<{ [key: string]: string }>;
@@ -87,7 +88,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
 				<div
 					className="prose max-w-none dark:prose-invert mb-8"
-					dangerouslySetInnerHTML={{ __html: post.content }}
+					dangerouslySetInnerHTML={{ __html: await convertMarkdownToHtml(post.content) }}
 				/>
 
 				<footer>

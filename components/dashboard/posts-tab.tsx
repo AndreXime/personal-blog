@@ -64,15 +64,15 @@ export function PostsTab() {
 					fetch('/api/categories').then((res) => res.json()),
 					fetch('/api/tags').then((res) => res.json()),
 				]);
-				console.log(postsRes,categoriesRes,tagsRes)
+				console.log(postsRes, categoriesRes, tagsRes);
 				setPosts(postsRes.posts || []);
 				setCategories(categoriesRes.categories || []);
 				setTags(tagsRes.tags || []);
 			} catch (error) {
 				console.error('Error fetching data:', error);
 				toast({
-					title: 'Error',
-					description: 'Failed to load data',
+					title: 'Erro',
+					description: 'Falha ao carregar dados',
 					variant: 'destructive',
 				});
 			} finally {
@@ -118,18 +118,18 @@ export function PostsTab() {
 			if (response.ok) {
 				setPosts(posts.filter((post) => post.id !== postId));
 				toast({
-					title: 'Success',
-					description: 'Post deleted successfully',
+					title: 'Sucesso',
+					description: 'Publicação excluída com sucesso',
 				});
 			} else {
 				const data = await response.json();
-				throw new Error(data.error || 'Failed to delete post');
+				throw new Error(data.error || 'Falha ao excluir publicação');
 			}
 		} catch (error) {
 			console.error('Error deleting post:', error);
 			toast({
-				title: 'Error',
-				description: error instanceof Error ? error.message : 'Failed to delete post',
+				title: 'Erro',
+				description: error instanceof Error ? error.message : 'Falha ao excluir publicação',
 				variant: 'destructive',
 			});
 		}
@@ -170,21 +170,22 @@ export function PostsTab() {
 				}
 
 				toast({
-					title: 'Success',
-					description: `Post ${editingPost ? 'updated' : 'created'} successfully`,
+					title: 'Sucesso',
+					description: `Publicação ${editingPost ? 'atualizada' : 'criada'} com sucesso`,
 				});
 
 				resetForm();
 				setActiveTab('all-posts');
 			} else {
 				const data = await response.json();
-				throw new Error(data.error || `Failed to ${editingPost ? 'update' : 'create'} post`);
+				throw new Error(data.error || `Falha ao ${editingPost ? 'atualizar' : 'criar'} publicação`);
 			}
 		} catch (error) {
 			console.error('Error submitting post:', error);
 			toast({
-				title: 'Error',
-				description: error instanceof Error ? error.message : `Failed to ${editingPost ? 'update' : 'create'} post`,
+				title: 'Erro',
+				description:
+					error instanceof Error ? error.message : `Falha ao ${editingPost ? 'atualizar' : 'criar'} publicação`,
 				variant: 'destructive',
 			});
 		} finally {
@@ -211,22 +212,22 @@ export function PostsTab() {
 			onValueChange={setActiveTab}
 			className="w-full">
 			<TabsList className="grid grid-cols-2 w-[400px] mb-8">
-				<TabsTrigger value="all-posts">All Posts</TabsTrigger>
-				<TabsTrigger value="new-post">{editingPost ? 'Edit Post' : 'New Post'}</TabsTrigger>
+				<TabsTrigger value="all-posts">Todas as Publicações</TabsTrigger>
+				<TabsTrigger value="new-post">{editingPost ? 'Editar Publicação' : 'Nova Publicação'}</TabsTrigger>
 			</TabsList>
 
 			<TabsContent
 				value="all-posts"
 				className="space-y-4">
 				<div className="flex justify-between items-center mb-4">
-					<h2 className="text-xl font-semibold">Your Posts</h2>
+					<h2 className="text-xl font-semibold">Suas Publicações</h2>
 					<Button
 						onClick={() => {
 							resetForm();
 							setActiveTab('new-post');
 						}}>
 						<Plus className="h-4 w-4 mr-2" />
-						New Post
+						Nova Publicação
 					</Button>
 				</div>
 
@@ -237,11 +238,11 @@ export function PostsTab() {
 				) : posts.length === 0 ? (
 					<Card>
 						<CardContent className="py-8 text-center">
-							<p className="text-muted-foreground">You haven't created any posts yet.</p>
+							<p className="text-muted-foreground">Você ainda não criou nenhuma publicação.</p>
 							<Button
 								className="mt-4"
 								onClick={() => setActiveTab('new-post')}>
-								Create your first post
+								Crie sua primeira publicação
 							</Button>
 						</CardContent>
 					</Card>
@@ -260,7 +261,7 @@ export function PostsTab() {
 															? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
 															: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100'
 													}`}>
-													{post.published ? 'Published' : 'Draft'}
+													{post.published ? 'Publicado' : 'Rascunho'}
 												</span>
 												<span>{new Date(post.createdAt).toLocaleDateString()}</span>
 											</div>
@@ -285,17 +286,17 @@ export function PostsTab() {
 												</AlertDialogTrigger>
 												<AlertDialogContent>
 													<AlertDialogHeader>
-														<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+														<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 														<AlertDialogDescription>
-															This will permanently delete the post "{post.title}".
+															Isso irá excluir permanentemente a publicação "{post.title}".
 														</AlertDialogDescription>
 													</AlertDialogHeader>
 													<AlertDialogFooter>
-														<AlertDialogCancel>Cancel</AlertDialogCancel>
+														<AlertDialogCancel>Cancelar</AlertDialogCancel>
 														<AlertDialogAction
 															onClick={() => handleDeletePost(post.id)}
 															className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-															Delete
+															Excluir
 														</AlertDialogAction>
 													</AlertDialogFooter>
 												</AlertDialogContent>
@@ -314,9 +315,11 @@ export function PostsTab() {
 				className="space-y-4">
 				<Card>
 					<CardHeader>
-						<CardTitle>{editingPost ? 'Edit Post' : 'Create New Post'}</CardTitle>
+						<CardTitle>{editingPost ? 'Editar Publicação' : 'Criar Nova Publicação'}</CardTitle>
 						<CardDescription>
-							{editingPost ? 'Update your existing post' : 'Fill in the details to create a new blog post'}
+							{editingPost
+								? 'Atualize sua publicação existente'
+								: 'Preencha os detalhes para criar uma nova publicação'}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
@@ -325,7 +328,7 @@ export function PostsTab() {
 							className="space-y-6">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div className="space-y-2">
-									<Label htmlFor="title">Title</Label>
+									<Label htmlFor="title">Título</Label>
 									<Input
 										id="title"
 										value={title}
@@ -352,14 +355,14 @@ export function PostsTab() {
 											type="button"
 											variant="outline"
 											onClick={generateSlug}>
-											Generate
+											Gerar
 										</Button>
 									</div>
 								</div>
 							</div>
 
 							<div className="space-y-2">
-								<Label htmlFor="excerpt">Excerpt</Label>
+								<Label htmlFor="excerpt">Resumo</Label>
 								<Textarea
 									id="excerpt"
 									value={excerpt}
@@ -369,7 +372,7 @@ export function PostsTab() {
 							</div>
 
 							<div className="space-y-2">
-								<Label htmlFor="content">Content</Label>
+								<Label htmlFor="content">Conteúdo</Label>
 								<Editor
 									initialValue={content}
 									onChange={setContent}
@@ -378,7 +381,7 @@ export function PostsTab() {
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div className="space-y-2">
-									<Label htmlFor="image">Cover Image</Label>
+									<Label htmlFor="image">Imagem de Capa</Label>
 									<Input
 										id="image"
 										type="file"
@@ -388,7 +391,7 @@ export function PostsTab() {
 								</div>
 
 								<div className="space-y-2">
-									<Label htmlFor="readingTime">Reading Time (minutes)</Label>
+									<Label htmlFor="readingTime">Tempo de Leitura (minutos)</Label>
 									<Input
 										id="readingTime"
 										type="number"
@@ -402,22 +405,22 @@ export function PostsTab() {
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div className="space-y-4">
-									<Label>Categories</Label>
+									<Label>Categorias</Label>
 									<MultiSelect
 										options={categories.map((cat) => ({ value: cat.id, label: cat.name }))}
 										selected={selectedCategories}
 										onChange={setSelectedCategories}
-										placeholder="Select categories"
+										placeholder="Selecione categorias"
 									/>
 								</div>
 
 								<div className="space-y-4">
-									<Label>Tags</Label>
+									<Label>Etiquetas</Label>
 									<MultiSelect
 										options={tags.map((tag) => ({ value: tag.id, label: tag.name }))}
 										selected={selectedTags}
 										onChange={setSelectedTags}
-										placeholder="Select tags"
+										placeholder="Selecione etiquetas"
 									/>
 								</div>
 							</div>
@@ -430,7 +433,7 @@ export function PostsTab() {
 										resetForm();
 										setActiveTab('all-posts');
 									}}>
-									Cancel
+									Cancelar
 								</Button>
 								<Button
 									type="submit"
@@ -438,12 +441,12 @@ export function PostsTab() {
 									{isSubmitting ? (
 										<>
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-											{editingPost ? 'Updating...' : 'Creating...'}
+											{editingPost ? 'Atualizando...' : 'Criando...'}
 										</>
 									) : editingPost ? (
-										'Update Post'
+										'Atualizar Publicação'
 									) : (
-										'Create Post'
+										'Criar Publicação'
 									)}
 								</Button>
 							</div>

@@ -20,7 +20,7 @@ interface MultiSelectProps {
 	placeholder?: string;
 }
 
-export function MultiSelect({ options, selected, onChange, placeholder = 'Select options' }: MultiSelectProps) {
+export function MultiSelect({ options, selected, onChange, placeholder = 'Selecione opções' }: MultiSelectProps) {
 	const [open, setOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -82,11 +82,11 @@ export function MultiSelect({ options, selected, onChange, placeholder = 'Select
 			<PopoverContent className="w-full p-0">
 				<Command>
 					<CommandInput
-						placeholder={`Search ${placeholder.toLowerCase()}...`}
+						placeholder={`Pesquisar ${placeholder.toLowerCase()}...`}
 						ref={inputRef}
 					/>
 					<CommandList>
-						<CommandEmpty>No results found.</CommandEmpty>
+						<CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 						<CommandGroup>
 							{options.map((option) => (
 								<CommandItem

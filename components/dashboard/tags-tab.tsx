@@ -47,8 +47,8 @@ export function TagsTab() {
 			} catch (error) {
 				console.error('Error fetching tags:', error);
 				toast({
-					title: 'Error',
-					description: 'Failed to load tags',
+					title: 'Erro',
+					description: 'Falha ao carregar etiquetas',
 					variant: 'destructive',
 				});
 			} finally {
@@ -81,8 +81,8 @@ export function TagsTab() {
 			if (response.ok) {
 				setTags(tags.filter((tag) => tag.id !== tagId));
 				toast({
-					title: 'Success',
-					description: 'Tag deleted successfully',
+					title: 'Sucesso',
+					description: 'Etiqueta excluída com sucesso',
 				});
 			} else {
 				const data = await response.json();
@@ -91,8 +91,8 @@ export function TagsTab() {
 		} catch (error) {
 			console.error('Error deleting tag:', error);
 			toast({
-				title: 'Error',
-				description: error instanceof Error ? error.message : 'Failed to delete tag',
+				title: 'Erro',
+				description: error instanceof Error ? error.message : 'Falha ao excluir etiqueta',
 				variant: 'destructive',
 			});
 		}
@@ -130,21 +130,21 @@ export function TagsTab() {
 				}
 
 				toast({
-					title: 'Success',
-					description: `Tag ${editingTag ? 'updated' : 'created'} successfully`,
+					title: 'Sucesso',
+					description: `Etiqueta ${editingTag ? 'atualizada' : 'criada'} com sucesso`,
 				});
 
 				resetForm();
 				setShowForm(false);
 			} else {
 				const data = await response.json();
-				throw new Error(data.error || `Failed to ${editingTag ? 'update' : 'create'} tag`);
+				throw new Error(data.error || `Falha ao ${editingTag ? 'atualizar' : 'criar'} etiqueta`);
 			}
 		} catch (error) {
 			console.error('Error submitting tag:', error);
 			toast({
-				title: 'Error',
-				description: error instanceof Error ? error.message : `Failed to ${editingTag ? 'update' : 'create'} tag`,
+				title: 'Erro',
+				description: error instanceof Error ? error.message : `Falha ao ${editingTag ? 'atualizar' : 'criar'} etiqueta`,
 				variant: 'destructive',
 			});
 		} finally {
@@ -167,23 +167,23 @@ export function TagsTab() {
 	return (
 		<div className="space-y-6">
 			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-semibold">Tags</h2>
+				<h2 className="text-xl font-semibold">Etiquetas</h2>
 				<Button
 					onClick={() => {
 						resetForm();
 						setShowForm(true);
 					}}>
 					<Plus className="h-4 w-4 mr-2" />
-					New Tag
+					Nova Etiqueta
 				</Button>
 			</div>
 
 			{showForm && (
 				<Card>
 					<CardHeader>
-						<CardTitle>{editingTag ? 'Edit Tag' : 'Create New Tag'}</CardTitle>
+						<CardTitle>{editingTag ? 'Editar Etiqueta' : 'Criar Nova Etiqueta'}</CardTitle>
 						<CardDescription>
-							{editingTag ? 'Update your existing tag' : 'Fill in the details to create a new tag'}
+							{editingTag ? 'Atualize sua etiqueta existente' : 'Preencha os detalhes para criar uma nova etiqueta'}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
@@ -192,7 +192,7 @@ export function TagsTab() {
 							className="space-y-4">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="space-y-2">
-									<Label htmlFor="name">Name</Label>
+									<Label htmlFor="name">Nome</Label>
 									<Input
 										id="name"
 										value={name}
@@ -233,7 +233,7 @@ export function TagsTab() {
 										resetForm();
 										setShowForm(false);
 									}}>
-									Cancel
+									Cancelar
 								</Button>
 								<Button
 									type="submit"
@@ -241,12 +241,12 @@ export function TagsTab() {
 									{isSubmitting ? (
 										<>
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-											{editingTag ? 'Updating...' : 'Creating...'}
+											{editingTag ? 'Atualizando...' : 'Criando...'}
 										</>
 									) : editingTag ? (
-										'Update Tag'
+										'Atualizar Etiqueta'
 									) : (
-										'Create Tag'
+										'Criar Etiqueta'
 									)}
 								</Button>
 							</div>
@@ -262,11 +262,11 @@ export function TagsTab() {
 			) : tags.length === 0 ? (
 				<Card>
 					<CardContent className="py-8 text-center">
-						<p className="text-muted-foreground">You haven't created any tags yet.</p>
+						<p className="text-muted-foreground">Você ainda não criou nenhuma etiqueta.</p>
 						<Button
 							className="mt-4"
 							onClick={() => setShowForm(true)}>
-							Create your first tag
+							Crie sua primeira etiqueta
 						</Button>
 					</CardContent>
 				</Card>
@@ -299,17 +299,18 @@ export function TagsTab() {
 											</AlertDialogTrigger>
 											<AlertDialogContent>
 												<AlertDialogHeader>
-													<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+													<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 													<AlertDialogDescription>
-														This will permanently delete the tag "{tag.name}" and remove it from all associated posts.
+														Isso irá excluir permanentemente a etiqueta "{tag.name}" e removê-la de todas as postagens
+														associadas.
 													</AlertDialogDescription>
 												</AlertDialogHeader>
 												<AlertDialogFooter>
-													<AlertDialogCancel>Cancel</AlertDialogCancel>
+													<AlertDialogCancel>Cancelar</AlertDialogCancel>
 													<AlertDialogAction
 														onClick={() => handleDeleteTag(tag.id)}
 														className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-														Delete
+														Excluir
 													</AlertDialogAction>
 												</AlertDialogFooter>
 											</AlertDialogContent>

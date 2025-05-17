@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { convertHtmlToMarkdown, convertMarkdownToHtml, getErrorMessage } from '@/lib/utils';
+import { Buffer } from 'buffer';
 
 interface Params {
 	params: Promise<{ postId: string }>;
@@ -35,10 +36,29 @@ export async function GET(request: Request, { params }: Params) {
 export async function PUT(request: Request, { params }: Params) {
 	try {
 		const { postId } = await params;
-		const body = await request.json();
-		const { title, slug, excerpt, content, coverImage, readingTime, categories = [], tags = [] } = body;
+		const contentType = request.headers.get('content-type') ?? '';
+		if (!contentType.includes('multipart/form-data')) {
+			return NextResponse.json({ error: 'Content-Type deve ser multipart/form-data' }, { status: 400 });
+		}
+		const formData = await request.formData();
+		const imageFile = formData.get('image') as File | null;
+		const title = formData.get('title') as string;
+		const slug = formData.get('slug') as string;
+		const excerpt = formData.get('excerpt') as string;
+		const contentStr = formData.get('content') as string;
+		const readingTime = parseInt(formData.get('readingTime') as string) || 0;
+		const categoriesArr = JSON.parse((formData.get('categories') as string) || '[]');
+		const tagsArr = JSON.parse((formData.get('tags') as string) || '[]');
 
-		if (!title || !slug || !content) {
+		let coverImage;
+		let imageData;
+		if (imageFile) {
+			coverImage = imageFile.name;
+			const arrayBuffer = await imageFile.arrayBuffer();
+			imageData = Buffer.from(arrayBuffer);
+		}
+
+		if (!title || !slug || !contentStr) {
 			return NextResponse.json({ error: 'Título, slug e conteúdo são obrigatórios' }, { status: 400 });
 		}
 
@@ -48,16 +68,16 @@ export async function PUT(request: Request, { params }: Params) {
 				title,
 				slug,
 				excerpt,
-				content: convertHtmlToMarkdown(content),
-				coverImage,
+				content: convertHtmlToMarkdown(contentStr),
+				...(imageFile && { coverImage, imageData }),
 				readingTime,
 				categories: {
 					deleteMany: {},
-					create: categories.map((categoryId: string) => ({ category: { connect: { id: categoryId } } })),
+					create: categoriesArr.map((categoryId: string) => ({ category: { connect: { id: categoryId } } })),
 				},
 				tags: {
 					deleteMany: {},
-					create: tags.map((tagId: string) => ({ tag: { connect: { id: tagId } } })),
+					create: tagsArr.map((tagId: string) => ({ tag: { connect: { id: tagId } } })),
 				},
 			},
 			include: {
