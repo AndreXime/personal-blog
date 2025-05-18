@@ -31,7 +31,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className={inter.className}>
 				<ThemeProvider
 					attribute="class"
-					enableSystem
 					disableTransitionOnChange>
 					<div className="flex min-h-screen flex-col">
 						<Header />

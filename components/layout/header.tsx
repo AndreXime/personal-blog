@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/common/theme-toggle';
-import { Button } from '@/components/ui/button';
 
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,18 +48,19 @@ export function Header() {
 						))}
 					</nav>
 
-					<div className="hidden md:flex items-center gap-2">
+					<div className="hidden md:block">
 						<ThemeToggle />
 					</div>
 
-					<Button
-						variant="ghost"
-						size="icon"
-						className="md:hidden"
-						onClick={() => setIsMenuOpen(!isMenuOpen)}>
-						<Menu className="h-5 w-5" />
-						<span className="sr-only">Toggle menu</span>
-					</Button>
+					<button
+						onClick={() => setIsMenuOpen(!isMenuOpen)}
+						className="md:hidden cursor-pointer"
+						aria-label="Toggle menu">
+						<Menu
+							size={25}
+							aria-hidden="true"
+						/>
+					</button>
 				</div>
 			</div>
 
@@ -76,13 +76,12 @@ export function Header() {
 								</Link>
 							</div>
 
-							<Button
-								variant="ghost"
-								size="icon"
+							<X
+								className="md:hidden cursor-pointer"
+								size={25}
 								onClick={() => setIsMenuOpen(false)}>
-								<X className="h-5 w-5" />
 								<span className="sr-only">Close menu</span>
-							</Button>
+							</X>
 						</div>
 
 						<nav className="flex flex-col gap-4 py-8">
@@ -97,9 +96,7 @@ export function Header() {
 									{route.label}
 								</Link>
 							))}
-							<div className="flex flex-col gap-2 mt-4">
-								<ThemeToggle />
-							</div>
+							<ThemeToggle />
 						</nav>
 					</div>
 				</div>

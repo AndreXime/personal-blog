@@ -16,7 +16,7 @@ export default async function Home() {
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<section className="mb-12">
-				<div className="flex justify-between items-center mb-6">
+				<div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-3	">
 					<h2 className="text-3xl font-bold">Posts Recentes</h2>
 					<SearchBar />
 				</div>

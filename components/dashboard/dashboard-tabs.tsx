@@ -17,7 +17,7 @@ export function DashboardTabs() {
 			value={activeTab}
 			onValueChange={setActiveTab}
 			className="w-full">
-			<TabsList className="grid grid-cols-5 mb-8">
+			<TabsList className="flex flex-wrap w-full h-full gap-3 mb-8">
 				<TabsTrigger value="profile">Perfil</TabsTrigger>
 				<TabsTrigger value="security">Segurança</TabsTrigger>
 				<TabsTrigger value="posts">Publicações</TabsTrigger>

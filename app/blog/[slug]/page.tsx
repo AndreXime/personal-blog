@@ -87,7 +87,7 @@ export default async function PostPage({ params }: PostPageProps) {
 				</header>
 
 				<div
-					className="prose max-w-none dark:prose-invert mb-8"
+					className="prose max-w-full break-words dark:prose-invert mb-8"
 					dangerouslySetInnerHTML={{ __html: await convertMarkdownToHtml(post.content) }}
 				/>
 
